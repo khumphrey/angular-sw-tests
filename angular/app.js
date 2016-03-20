@@ -16,7 +16,7 @@ app.controller('main', function($scope, $state) {
             })
             .then(function(reg) {
                 console.log('Clearing caches');
-                return navigator.serviceWorker.register('clear.js', {
+                return navigator.serviceWorker.register('/clear.js', {
                     scope: './'
                 });
             })

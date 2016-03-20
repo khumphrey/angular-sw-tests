@@ -7,3 +7,4 @@ app.listen(8080, function() {
 });
 app.use('/', express.static(path.join(__dirname, '/')));
 app.use('/', express.static(path.join(__dirname, '/public')));
+app.use('/', express.static(path.join(__dirname, '/angular')));
