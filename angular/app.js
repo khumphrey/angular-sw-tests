@@ -6,8 +6,5 @@ var app = angular.module('simple', ['ui.router']);
 //     $urlRouterProvider.otherwise('/');
 // });
 app.controller('main', function($scope, $state) {
-    $scope.working = 'YESSSSSSS';
-    $scope.ponyGo = function() {
-        $state.go('pony');
-    };
+    $scope.working = 'This was added via Angular!!';
 });

@@ -25,7 +25,8 @@ self.addEventListener('install', function(event) {
                 '/doc-imgs/Hippo.jpg',
                 '/node_modules/angular/angular.min.js',
                 '/node_modules/angular-ui-router/release/angular-ui-router.min.js',
-                '/angular/pony.template.html'
+                '/angular/pony.template.html',
+                '/doc-imgs/pony.jpg'
             ]);
         })
     );

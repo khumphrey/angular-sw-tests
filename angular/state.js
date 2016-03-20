@@ -10,7 +10,7 @@ app.config(function($stateProvider) {
             url: "/pony",
             templateUrl: "/angular/pony.template.html",
             controller: function($scope) {
-                $scope.place = "Portland";
+                $scope.animal = "pony";
             }
         });
 });
