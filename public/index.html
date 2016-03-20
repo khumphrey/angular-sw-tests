@@ -17,15 +17,49 @@
     <img src="/doc-imgs/Hippo.jpg" alt="Ew">
     <p>And now, some content added via JavaScript:</p>
     <script src="script.js"></script>
-   <script>
-        navigator.serviceWorker.register('/sw.js', {
-            // The scope cannot be parent to the script url
-            scope: '/'
-        });
+    <script>
+    navigator.serviceWorker.register('/sw.js', {
+        // The scope cannot be parent to the script url
+        scope: '/'
+    });
+    </script>
+    <script>
+    if (navigator.onLine) {
+        (function() {
+            // Let's register our serviceworker
+            navigator.serviceWorker.getRegistration('../').then(function(reg) {
+                console.log('Unregistering ServiceWorker');
+                return reg && reg.unregister();
+            })
+            .then(function() {
+                return navigator.serviceWorker.getRegistration();
+            })
+            .then(function(reg) {
+                return reg && reg.unregister();
+            })
+            .then(function(reg) {
+                console.log('Clearing caches');
+                return navigator.serviceWorker.register('clear.js', {
+                    scope: './'
+                })
+            })
+            .then(function(reg) {
+                reg.addEventListener('updatefound', function() {
+                    var installing = reg.installing;
+                    reg.installing.addEventListener('statechange', function() {
+                        if (installing.state == 'installed') {
+                            console.log('Done!');
+                            reg.unregister();
+                        }
+                    });
+                });
+            });
+        }());
+    }
     </script>
     <script src="logging.js"></script>
     <button ui-sref="pony">Click Me for Pony</button>
     <ui-view></ui-view>
 </body>
 
-</html>
+</html
