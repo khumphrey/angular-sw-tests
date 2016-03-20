@@ -1,7 +1,7 @@
 app.config(function($stateProvider) {
-    $stateProvider.state('albums', {
-            url: '/albums',
-            template: '<div> Hello you are in albums and {{ name }} controls you</div>',
+    $stateProvider.state('alternate', {
+            url: '/alternate',
+            template: '<div> Hello you are in an alternate Angular state and {{ name }} controls you</div>',
             controller: function($scope) {
                 $scope.name = "Kate";
             }
