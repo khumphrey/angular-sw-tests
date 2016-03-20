@@ -1,61 +1,46 @@
 <!DOCTYPE html>
 <html>
-
-<head>
+  <head>
     <title>Reset ServiceWorker</title>
     <meta name="viewport" content="width=device-width">
     <link rel="stylesheet" href="../style.css">
-</head>
-
-<body>
+  </head>
+  <body>
     <h1>Resetting ServiceWorker</h1>
     <script>
-    (function() {
+      (function() {
         if (/reset$/.test(location.pathname)) {
-            location.href = 'reset/';
-            return;
+          location.href = 'reset/';
+          return;
         }
-
         function log(msg) {
-            var p = document.createElement('p');
-            p.textContent = msg;
-            document.body.appendChild(p);
+          var p = document.createElement('p');
+          p.textContent = msg;
+          document.body.appendChild(p);
         }
         // Let's register our serviceworker
         navigator.serviceWorker.getRegistration('../').then(function(reg) {
-            log('Unregistering ServiceWorker');
-            return reg && reg.unregister();
-        }).then(function() {
-            return navigator.serviceWorker.getRegistration();
-        }).then(function(reg) {
-            return reg && reg.unregister();
-        }).then(function(reg) {
-            log('Clearing caches');
-            return navigator.serviceWorker.register(self.addEventListener('install', function(event) {
-                // delete all the caches
-                event.waitUntil(
-                    caches.keys().then(function(keys) {
-                        return Promise.all(
-                            keys.map(function(key) {
-                                return caches.delete(key);
-                            })
-                        );
-                    })
-                );
-            }))
-        }).then(function(reg) {
-            reg.addEventListener('updatefound', function() {
-                var installing = reg.installing;
-                reg.installing.addEventListener('statechange', function() {
-                    if (installing.state == 'installed') {
-                        log('Done!');
-                        reg.unregister();
-                    }
-                });
+          log('Unregistering ServiceWorker');
+          return reg && reg.unregister();
+        })
+        .then(function(reg) {
+          log('Clearing caches');
+          return navigator.serviceWorker.register('sw.js', {
+            scope: './'
+          })
+        })
+        .then(function(reg) {
+          reg.addEventListener('updatefound', function() {
+            var installing = reg.installing;
+            reg.installing.addEventListener('statechange', function() {
+              if (installing.state == 'installed') {
+                log('Done!');
+                reg.unregister();
+              }
             });
+          });
         });
-    }());
+      }());
     </script>
-</body>
-
-</html
+  </body>
+</html>
