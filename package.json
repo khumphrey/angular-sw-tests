@@ -2,9 +2,15 @@
   "name": "simple-serviceworker-tutorial",
   "private": true,
   "scripts": {
-    "start": "http-server -c-1"
+    "start": "nodemon server.js"
   },
   "devDependencies": {
     "http-server": "0.8.5"
+  },
+  "dependencies": {
+    "angular": "^1.5.1",
+    "angular-ui-router": "^0.2.18",
+    "path": "^0.12.7",
+    "ui-router": "^1.0.0-alpha0"
   }
 }

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Super Simple ServiceWorker</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" href="style.css">
+    <script src="/node_modules/angular/angular.min.js"></script>
+    <script src="/node_modules/angular-ui-router/release/angular-ui-router.min.js"></script>
+    <script src="/angular/app.js"></script>
+    <script src="/angular/state.js"></script>
+</head>
+
+<body ng-app="simple">
+    <div ng-controller="main"> {{working}} </div>
+    <h1>Super simple ServiceWorker</h1>
+    <img src="/doc-imgs/Hippo.jpg" alt="Ew">
+    <p>And now, some content added via JavaScript:</p>
+    <script src="script.js"></script>
+   <script>
+        navigator.serviceWorker.register('/sw.js', {
+            // The scope cannot be parent to the script url
+            scope: '/'
+        });
+    </script>
+    <script src="logging.js"></script>
+    <button ui-sref="pony">Click Me for Pony</button>
+    <ui-view></ui-view>
+</body>
+
+</html>
