@@ -18,16 +18,25 @@
     <p>And now, some content added via JavaScript:</p>
     <script src="script.js"></script>
     <script>
-    navigator.serviceWorker.register('/sw.js', {
-        // The scope cannot be parent to the script url
-        scope: '/'
-    });
-    </script>
-    <script>
-    if (navigator.onLine) {
-        (function() {
-            // Let's register our serviceworker
-            navigator.serviceWorker.getRegistration('../').then(function(reg) {
+    function isOnline(no, yes) {
+        var xhr = XMLHttpRequest ? new XMLHttpRequest() : new ActiveXObject('Microsoft.XMLHttp');
+        xhr.onload = function() {
+            if (yes instanceof Function) {
+                yes();
+            }
+        }
+        xhr.onerror = function() {
+            if (no instanceof Function) {
+                no();
+            }
+        }
+        xhr.open("GET", "anypage.php", true);
+        xhr.send();
+    }
+
+    function onlineSuccess() {
+        // Let's register our serviceworker
+        navigator.serviceWorker.getRegistration('../').then(function(reg) {
                 console.log('Unregistering ServiceWorker');
                 return reg && reg.unregister();
             })
@@ -53,13 +62,24 @@
                         }
                     });
                 });
-            });
-        }());
-    }
+            })
+            .then(function() {
+                navigator.serviceWorker.register('/sw.js', {
+                    // The scope cannot be parent to the script url
+                    scope: '/'
+                });
+            })
+    };
+
+    isOnline(
+        function() {
+            console.log("Sorry, we currently do not have Internet access.");
+        },
+        onlineSuccess
+    );
     </script>
     <script src="logging.js"></script>
     <button ui-sref="pony">Click Me for Pony</button>
     <ui-view></ui-view>
 </body>
-
-</html
+</ht

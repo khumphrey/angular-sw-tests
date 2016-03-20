@@ -59,11 +59,11 @@ self.addEventListener('fetch', function(event) {
         // matches the request
         caches.match(event.request)
         .then(function(response) {
-            console.log('event.request: ', event.request);
+            // console.log('event.request: ', event.request);
             // If we get something, we return it, otherwise
             // it's null, and we'll pass the request to
             // fetch, which will use the network.
-            console.log('is there a response', response);
+            // console.log('is there a response', response);
             return response || fetch(event.request);
         })
     );
